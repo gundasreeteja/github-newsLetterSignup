@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
@@ -31,14 +32,14 @@ app.post("/sendDetails", function (req, res) {
   };
 
   const jsonData = JSON.stringify(data);
-  const apiKey = "6e089f11e49fe6a4c1af3c6ad2742d98-us13";
+  const apiKey = process.env.APIKEY;
   const serverPrefix = apiKey.split("-")[1];
-  const listId = "d74c1eef9b";
+  const listId = process.env.AUDIENCEID;
 
   const url = "https://us13.api.mailchimp.com/3.0/lists/" + listId;
   const options = {
     method: "POST",
-    auth: "SreeTeja1:6e089f11e49fe6a4c1af3c6ad2742d98-us13",
+    auth: process.env.AUTH,
   };
 
   const request = https.request(url, options, function (response) {
@@ -64,10 +65,3 @@ app.post("/failure", function (req, res) {
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server is running on port 3000");
 });
-
-// mail chimp API Key
-// 6e089f11e49fe6a4c1af3c6ad2742d98-us13
-
-// mail chimp audience id or unique id
-// d74c1eef9b
-// This is nothing but list id in api documentation
